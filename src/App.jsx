@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Books from "./pages/Books.jsx";
+import BookDetailsPage from './pages/BookDetails.jsx';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/books" element={<Books />} />
+        <Route path="/books/:id" element={<BookDetailsPage />} />
       </Routes>
     </div>
   );
