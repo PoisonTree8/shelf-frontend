@@ -4,18 +4,21 @@ import Books from "./pages/Books.jsx";
 import BookDetailsPage from './pages/BookDetails.jsx';
 import Login from './pages/Login.jsx';
 import SignUp from './pages/signUp.jsx';
+import Navbar from './components/Navbar';
+
 
 
 export default function App() {
   return (
     <div style={{ padding: 20 }}>
       <nav style={{ display: "flex", gap: 12, marginBottom: 16 }}>
-        <Link to="/">Home</Link>
-        <Link to="/books">Books</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Sign Up</Link>
+            <Navbar />
+      
+        
+       
 
       </nav>
+    
 
       <Routes>
         <Route path="/" element={<Home />} />
