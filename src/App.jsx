@@ -12,8 +12,8 @@ export default function App() {
   return (
     <div style={{ padding: 20 }}>
       <nav style={{ display: "flex", gap: 12, marginBottom: 16 }}>
-            <Navbar />
-      
+            <Navbar />  <Link to="/books">Books</Link>
+        
         
        
 
