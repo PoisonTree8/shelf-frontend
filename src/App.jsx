@@ -2,6 +2,9 @@ import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Books from "./pages/Books.jsx";
 import BookDetailsPage from './pages/BookDetails.jsx';
+import Login from './pages/Login.jsx';
+import SignUp from './pages/signUp.jsx';
+
 
 export default function App() {
   return (
@@ -9,12 +12,18 @@ export default function App() {
       <nav style={{ display: "flex", gap: 12, marginBottom: 16 }}>
         <Link to="/">Home</Link>
         <Link to="/books">Books</Link>
+        <Link to="/login">Login</Link>
+        <Link to="/signup">Sign Up</Link>
+
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/books" element={<Books />} />
         <Route path="/books/:id" element={<BookDetailsPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+
       </Routes>
     </div>
   );
