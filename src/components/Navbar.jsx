@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
+
 export default function Navbar() {
   const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -13,29 +14,28 @@ export default function Navbar() {
   };
 
   return (
-    <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-      
+    <nav className="navbar">
+      {/* Left */}
+      <div className="nav-left">
+        <Link to="/">Home</Link>
+        <Link to="/books">Books</Link>
+        {user && <Link to="/library">Library</Link>}
+      </div>
 
-      <span style={{ float: 'right' }}>
+      {/* Right */}
+      <div className="nav-right">
         {!user ? (
           <>
-          <Link to="/">Home</Link>{' | '}
-
-          <Link to="/books">Books</Link>{' | '}
-
-            <Link to="/login">Login</Link>{' | '}
-            
+            <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </>
         ) : (
           <>
-            <span style={{ marginRight: '1rem' }}>
-              Hello, {user.username}
-            </span>
+            <span className="nav-user">Hello, {user.username}</span>
             <button onClick={handleLogout}>Logout</button>
           </>
         )}
-      </span>
+      </div>
     </nav>
   );
 }
