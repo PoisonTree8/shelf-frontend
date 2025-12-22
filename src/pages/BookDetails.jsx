@@ -9,27 +9,20 @@ export default function BookDetails() {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
 
-  // --------------------
-  // Book
-  // --------------------
+  // book
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // --------------------
-  // Purchase
-  // --------------------
+  // purchase
   const [hasPurchased, setHasPurchased] = useState(false);
-  const [checkingPurchase, setCheckingPurchase] = useState(false);
 
-  // --------------------
-  // Ratings
-  // --------------------
+  // ratings
   const [ratings, setRatings] = useState([]);
   const [ratingValue, setRatingValue] = useState(5);
   const [submittingRating, setSubmittingRating] = useState(false);
 
   // --------------------
-  // Fetch book
+  // fetch book
   // --------------------
   useEffect(() => {
     const fetchBook = async () => {
@@ -48,20 +41,17 @@ export default function BookDetails() {
   }, [id]);
 
   // --------------------
-  // Check purchase
+  // check purchase
   // --------------------
   useEffect(() => {
     if (!user || !book) return;
 
     const check = async () => {
       try {
-        setCheckingPurchase(true);
         const res = await checkPurchase(book._id);
         setHasPurchased(res.purchased);
       } catch (err) {
         console.error(err);
-      } finally {
-        setCheckingPurchase(false);
       }
     };
 
@@ -69,7 +59,7 @@ export default function BookDetails() {
   }, [user, book]);
 
   // --------------------
-  // Fetch ratings
+  // fetch ratings
   // --------------------
   useEffect(() => {
     if (!book) return;
@@ -87,14 +77,34 @@ export default function BookDetails() {
   }, [book]);
 
   // --------------------
-  // Handlers
+  // handlers
   // --------------------
   const handleBuy = async () => {
     try {
       await buyBook(book._id);
       setHasPurchased(true);
     } catch (err) {
-      alert(err?.message || 'Purchase failed');
+      alert('Purchase failed');
+    }
+  };
+
+  const handleRead = async () => {
+    try {
+      const token = localStorage.getItem('token');
+
+      const res = await fetch(
+        `http://localhost:3000/books/${book._id}/read`,
+        {
+          headers: token
+            ? { Authorization: `Bearer ${token}` }
+            : {},
+        }
+      );
+
+      const data = await res.json();
+      window.open(data.pdfUrl, '_blank');
+    } catch (err) {
+      alert('Failed to open book');
     }
   };
 
@@ -104,14 +114,14 @@ export default function BookDetails() {
       const newRating = await addRating(book._id, ratingValue);
       setRatings([newRating, ...ratings]);
     } catch (err) {
-      alert(err?.message || 'Failed to add rating');
+      alert(err.message);
     } finally {
       setSubmittingRating(false);
     }
   };
 
   // --------------------
-  // Render
+  // render
   // --------------------
   if (loading) return <p>Loading...</p>;
   if (!book) return <p>Book not found</p>;
@@ -120,18 +130,23 @@ export default function BookDetails() {
     <div>
       <h1>{book.title}</h1>
       <p><strong>Author:</strong> {book.author}</p>
-      <p><strong>Price:</strong> {book.price}</p>
+      <p><strong>Price:</strong> {book.price} BD</p>
       <p>{book.description}</p>
 
       <hr />
 
+      {/* Read */}
+      <button onClick={handleRead}>
+        {hasPurchased ? 'Read Full Book' : 'Read Preview'}
+      </button>
+
+      <br /><br />
+
       {/* Purchase */}
-      {!user && <p>Please login to buy this book</p>}
+      {!user && <p>Please login to purchase this book</p>}
 
-      {user && checkingPurchase && <p>Checking purchase status...</p>}
-
-      {user && !checkingPurchase && !hasPurchased && (
-        <button onClick={handleBuy}>Buy</button>
+      {user && !hasPurchased && (
+        <button onClick={handleBuy}>Buy Book</button>
       )}
 
       {user && hasPurchased && (
@@ -154,7 +169,6 @@ export default function BookDetails() {
         ))}
       </ul>
 
-      {/* Add Rating */}
       {user && hasPurchased && (
         <div>
           <h4>Add your rating</h4>
@@ -163,9 +177,7 @@ export default function BookDetails() {
             onChange={(e) => setRatingValue(Number(e.target.value))}
           >
             {[1, 2, 3, 4, 5].map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
+              <option key={n} value={n}>{n}</option>
             ))}
           </select>
 
