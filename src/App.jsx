@@ -6,6 +6,7 @@ import Login from './pages/Login.jsx';
 import SignUp from './pages/signUp.jsx';
 import Navbar from './components/Navbar';
 import Library from './pages/Library';
+import AddBook from './pages/addBook';
 
 
 
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/library" element={<Library />} />
+        <Route path="/admin/add-Book" element={<AddBook />} />
 
       </Routes>
     </div>
