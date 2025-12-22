@@ -13,6 +13,7 @@ export default function AdminAddBook() {
     description: '',
     previewPdfUrl: '',
     fullPdfUrl: '',
+    coverImageUrl: '',
   });
 
   // hide page completely if not admin
@@ -108,6 +109,15 @@ export default function AdminAddBook() {
           onChange={handleChange}
           required
         />
+
+        <input 
+          name='coverImageUrl'
+          placeholder='Cover Image URL'
+          value={formData.coverImageUrl}
+          onChange={handleChange}
+          required
+          />
+
 
         <button type="submit">Add Book</button>
       </form>
