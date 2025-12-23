@@ -61,6 +61,7 @@ const [searchTerm, setSearchTerm] = useState('');
         })
         .map((book) => (
           <div
+
             key={book._id}
             style={{
               border: '1px solid #ddd',
@@ -69,6 +70,18 @@ const [searchTerm, setSearchTerm] = useState('');
               borderRadius: '6px',
             }}
           >
+            {book.coverImageUrl && (
+              <img
+              src={book.coverImageUrl}
+              alt={book.title}
+              style={{
+                width:  '120px',
+                height:  '180px',
+                objectFit: 'cover',
+                marginBottom: '0.5rem',
+              }}
+              />
+            )}
             <h3>{book.title}</h3>
             <p>{book.author}</p>
             <p>{book.price} BD</p>

@@ -8,7 +8,7 @@ export default function AdminAddBook() {
 
   const [formData, setFormData] = useState({
     title: '',
-    author: '',
+    authorName: '',
     price: '',
     description: '',
     previewPdfUrl: '',
@@ -70,7 +70,7 @@ export default function AdminAddBook() {
         />
 
         <input
-          name="author"
+          name="authorName"
           placeholder="Author"
           value={formData.author}
           onChange={handleChange}

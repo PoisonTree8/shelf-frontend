@@ -88,25 +88,18 @@ export default function BookDetails() {
     }
   };
 
-  const handleRead = async () => {
-    try {
-      const token = localStorage.getItem('token');
+  const handleRead = () => {
+  const url = hasPurchased
+    ? book.fullPdfUrl
+    : book.previewPdfUrl;
 
-      const res = await fetch(
-        `http://localhost:3000/books/${book._id}/read`,
-        {
-          headers: token
-            ? { Authorization: `Bearer ${token}` }
-            : {},
-        }
-      );
+  if (!url) {
+    alert('No PDF available');
+    return;
+  }
 
-      const data = await res.json();
-      window.open(data.pdfUrl, '_blank');
-    } catch (err) {
-      alert('Failed to open book');
-    }
-  };
+  window.open(url, '_blank');
+};
 
   const handleAddRating = async () => {
     try {
