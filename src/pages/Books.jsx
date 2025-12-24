@@ -65,7 +65,7 @@ const BooksPage = () => {
 
             <div className="book-card-body">
               <div className="book-title">{book.title}</div>
-              <div className="book-author">{book.author}</div>
+              <div className="book-author">{book.authorName}</div>
               <div className="book-price">{book.price} BD</div>
 
               <Link to={`/books/${book._id}`}>

@@ -121,77 +121,89 @@ export default function BookDetails() {
   return (
     <div className="container">
       <div className="book-details">
-        {book.coverImageUrl && (
-          <img src={book.coverImageUrl} alt={book.title} />
+        {book.coverImageUrl ? (
+          <img
+            src={book.coverImageUrl}
+            alt={book.title}
+            onError={(e) => {
+              e.target.onerror = null; // Prevent infinite loop
+              e.target.src = '/path/to/placeholder-image.jpg'; // Fallback image
+            }}
+          />
+        ) : (
+          <img
+            src="/path/to/placeholder-image.jpg"
+            alt="Placeholder"
+          />
         )}
 
-        <h1>{book.title}</h1>
-        <p><strong>Author:</strong> {book.author}</p>
-        <p><strong>Price:</strong> {book.price} BD</p>
-        <p>{book.description}</p>
+        <div>
+          <h1>{book.title}</h1>
+          <p><strong>Author:</strong> {book.authorName}</p>
+          <p><strong>Price:</strong> {book.price} BD</p>
+          <p>{book.description}</p>
 
-        <button className="primary" onClick={handleRead}>
-          {hasPurchased ? 'Read Full Book' : 'Read Preview'}
-        </button>
+          <div className="book-actions">
+            <button className="primary" onClick={handleRead}>
+              {hasPurchased ? 'Read Full Book' : 'Read Preview'}
+            </button>
 
-        <br /><br />
+            {user && !hasPurchased && (
+              <button className="secondary" onClick={handleBuy}>
+                Buy Book
+              </button>
+            )}
+          </div>
 
-        {!user && <p>Please login to purchase this book</p>}
+          {user && hasPurchased && (
+            <p style={{ color: 'green' }}>Already Purchased</p>
+          )}
+        </div>
+      </div>
 
-        {user && !hasPurchased && (
-          <button className="secondary" onClick={handleBuy}>
-            Buy Book
-          </button>
-        )}
+      <hr />
 
-        {user && hasPurchased && (
-          <p style={{ color: 'green' }}>Already Purchased</p>
-        )}
-
-        <hr />
-
-        <h3>Ratings</h3>
-
-        {ratings.length === 0 && <p>No ratings yet</p>}
-
+      <h3>Ratings</h3>
+      {ratings.length === 0 ? (
+        <p>No ratings yet</p>
+      ) : (
         <ul className="rating-list">
           {ratings.map((rating) => (
             <li key={rating._id}>
-              <strong>{rating.user_id?.username}:</strong>{' '}
-              {rating.ratingValue} / 5
+              <strong>{rating.user_id?.username}:</strong> {rating.ratingValue} / 5
             </li>
           ))}
         </ul>
+      )}
 
-        {user && hasPurchased && (
-          <div>
-            <h4>Add your rating</h4>
+      {user && hasPurchased && (
+        <div className="rating-section">
+          <h4>Add Your Rating</h4>
 
+          <div className="rating-input" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <label htmlFor="rating-select" style={{ fontWeight: 'bold' }}>Rating:</label>
             <select
+              id="rating-select"
               value={ratingValue}
               onChange={(e) => setRatingValue(Number(e.target.value))}
+              style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ddd' }}
             >
               {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>{n}</option>
+                <option key={n} value={n}>{n} Star{n > 1 ? 's' : ''}</option>
               ))}
             </select>
-
-            <br /><br />
 
             <button
               className="primary"
               onClick={handleAddRating}
               disabled={submittingRating}
+              style={{ padding: '0.5rem 1rem', borderRadius: '4px', fontWeight: 'bold' }}
             >
-              {submittingRating ? 'Submitting...' : 'Submit Rating'}
+              {submittingRating ? 'Submitting...' : 'Submit'}
             </button>
           </div>
-        )}
-
-        {user && !hasPurchased && (
-          <p>You must purchase the book to rate it</p>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
