@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './Books.css';
 
 const BooksPage = () => {
   const [books, setBooks] = useState([]);
@@ -41,43 +42,42 @@ const BooksPage = () => {
 
   return (
     <div className="container">
-  <h1>Books</h1>
+      <h1>Books</h1>
 
-  <input
-    type="text"
-    placeholder="Search books..."
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    style={{ padding: '0.6rem', maxWidth: '400px', marginBottom: '2rem' }}
-  />
+      <input
+        type="text"
+        placeholder="Search books..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{ padding: '0.6rem', maxWidth: '400px', marginBottom: '2rem' }}
+      />
 
-  <div className="books-grid">
-    {filteredBooks.map((book) => (
-      <div className="book-card" key={book._id}>
-        {book.coverImageUrl && (
-          <img
-            src={book.coverImageUrl}
-            alt={book.title}
-            className="book-cover"
-          />
-        )}
+      <div className="books-grid">
+        {filteredBooks.map((book) => (
+          <div className="book-card" key={book._id}>
+            {book.coverImageUrl && (
+              <img
+                src={book.coverImageUrl}
+                alt={book.title}
+                className="book-cover"
+              />
+            )}
 
-        <div className="book-card-body">
-          <div className="book-title">{book.title}</div>
-          <div className="book-author">{book.author}</div>
-          <div className="book-price">{book.price} BD</div>
+            <div className="book-card-body">
+              <div className="book-title">{book.title}</div>
+              <div className="book-author">{book.author}</div>
+              <div className="book-price">{book.price} BD</div>
 
-          <Link to={`/books/${book._id}`}>
-            <button>View Book</button>
-          </Link>
-        </div>
+              <Link to={`/books/${book._id}`}>
+                <button>View Book</button>
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
 
-  {filteredBooks.length === 0 && <p>No books found</p>}
-</div>
-
+      {filteredBooks.length === 0 && <p>No books found</p>}
+    </div>
   );
 };
 

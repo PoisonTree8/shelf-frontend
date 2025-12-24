@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import './Library.css';
 
 export default function Library() {
   const { user } = useContext(AuthContext);
@@ -46,24 +47,19 @@ export default function Library() {
   }
 
   return (
-    <div>
-      <h1>My Library</h1>
+    <div className="library-container">
+      <h1 className="library-title">My Library</h1>
 
-      {books.length === 0 && <p>You haven’t purchased any books yet.</p>}
+      {books.length === 0 && <p className="library-empty">You haven’t purchased any books yet.</p>}
 
       {books.map((book) => (
         <div
           key={book._id}
-          style={{
-            border: '1px solid #ddd',
-            padding: '1rem',
-            marginBottom: '1rem',
-            borderRadius: '6px',
-          }}
+          className="library-book"
         >
-          <h3>{book.title}</h3>
-          <p>{book.author}</p>
-          <Link to={`/books/${book._id}`}>Read / View</Link>
+          <h3 className="book-title">{book.title}</h3>
+          <p className="book-author">{book.author}</p>
+          <Link to={`/books/${book._id}`} className="book-link">Read / View</Link>
         </div>
       ))}
     </div>

@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import './SignUp.css';
 
 export default function SignUp() {
   const { setUser } = useContext(AuthContext);
@@ -41,7 +42,6 @@ export default function SignUp() {
       // Save token
       localStorage.setItem('token', data.token);
 
-     
       const decodedUser = JSON.parse(atob(data.token.split('.')[1]));
       setUser(decodedUser);
 
@@ -54,15 +54,16 @@ export default function SignUp() {
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
+    <div className="sign-up-container">
+      <h1 className="sign-up-title">Sign Up</h1>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="sign-up-error">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username</label><br />
+      <form className="sign-up-form" onSubmit={handleSubmit}>
+        <div className="sign-up-field">
+          <label className="sign-up-label">Username</label>
           <input
+            className="sign-up-input"
             name="username"
             value={formData.username}
             onChange={handleChange}
@@ -70,9 +71,10 @@ export default function SignUp() {
           />
         </div>
 
-        <div>
-          <label>Email</label><br />
+        <div className="sign-up-field">
+          <label className="sign-up-label">Email</label>
           <input
+            className="sign-up-input"
             type="email"
             name="email"
             value={formData.email}
@@ -81,9 +83,10 @@ export default function SignUp() {
           />
         </div>
 
-        <div>
-          <label>Password</label><br />
+        <div className="sign-up-field">
+          <label className="sign-up-label">Password</label>
           <input
+            className="sign-up-input"
             type="password"
             name="password"
             value={formData.password}
@@ -92,7 +95,7 @@ export default function SignUp() {
           />
         </div>
 
-        <button type="submit" disabled={loading}>
+        <button className="sign-up-button" type="submit" disabled={loading}>
           {loading ? 'Creating account...' : 'Sign Up'}
         </button>
       </form>

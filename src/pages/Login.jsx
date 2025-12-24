@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import './Login.css';
 
 export default function Login() {
   const { setUser } = useContext(AuthContext);
@@ -53,15 +54,16 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="login-container">
+      <h1 className="login-title">Login</h1>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="login-error">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username</label><br />
+      <form className="login-form" onSubmit={handleSubmit}>
+        <div className="login-form-group">
+          <label className="login-label">Username</label>
           <input
+            className="login-input"
             name="username"
             value={formData.username}
             onChange={handleChange}
@@ -69,9 +71,10 @@ export default function Login() {
           />
         </div>
 
-        <div>
-          <label>Password</label><br />
+        <div className="login-form-group">
+          <label className="login-label">Password</label>
           <input
+            className="login-input"
             type="password"
             name="password"
             value={formData.password}
@@ -80,7 +83,7 @@ export default function Login() {
           />
         </div>
 
-        <button type="submit" disabled={loading}>
+        <button className="login-button" type="submit" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>

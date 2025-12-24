@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import './BookDetails.css';
 
 import { buyBook, checkPurchase } from '../services/purchases';
 import { getBookRatings, addRating } from '../services/ratings';

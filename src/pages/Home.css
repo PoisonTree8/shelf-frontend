@@ -1,0 +1,19 @@
+/* ===== Home Page Styles ===== */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #232f3e;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #555;
+}

@@ -1,0 +1,46 @@
+/* ===== Library Page Styles ===== */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #232f3e;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.library-item {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.library-item h3 {
+  font-size: 1.5rem;
+  color: #232f3e;
+}
+
+.library-item p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.library-item a {
+  color: #007185;
+  font-weight: bold;
+}
+
+.library-item a:hover {
+  text-decoration: underline;
+}
