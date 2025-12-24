@@ -7,6 +7,7 @@ import SignUp from './pages/signUp.jsx';
 import Navbar from './components/Navbar';
 import Library from './pages/Library';
 import AddBook from './pages/addBook';
+import './index.css';
 
 
 

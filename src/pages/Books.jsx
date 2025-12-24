@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const BooksPage = () => {
-const [books, setBooks] = useState([]);
-const [loading, setLoading] = useState(true);
-const [searchTerm, setSearchTerm] = useState('');
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     loadBooks();
@@ -24,83 +24,61 @@ const [searchTerm, setSearchTerm] = useState('');
     }
   };
 
+  const filteredBooks = books.filter((book) => {
+    return (
+      book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      book.author?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
   if (loading) {
     return (
-      <div style={{ textAlign: 'center', padding: '2rem' }}>
+      <div className="container">
         <p>Loading books...</p>
       </div>
     );
   }
 
- return (
-  <div>
-    <h1>Books</h1>
+  return (
+    <div className="container">
+  <h1>Books</h1>
 
-    {/* Search Bar */}
-    <input
-      type="text"
-      placeholder="Search books..."
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      style={{
-        padding: '8px',
-        width: '100%',
-        maxWidth: '400px',
-        marginBottom: '1rem',
-      }}
-    />
+  <input
+    type="text"
+    placeholder="Search books..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    style={{ padding: '0.6rem', maxWidth: '400px', marginBottom: '2rem' }}
+  />
 
-    {/* Books List */}
-    <div>
-      {books
-        .filter((book) => {
-          return (
-            book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.author?.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-        })
-        .map((book) => (
-          <div
+  <div className="books-grid">
+    {filteredBooks.map((book) => (
+      <div className="book-card" key={book._id}>
+        {book.coverImageUrl && (
+          <img
+            src={book.coverImageUrl}
+            alt={book.title}
+            className="book-cover"
+          />
+        )}
 
-            key={book._id}
-            style={{
-              border: '1px solid #ddd',
-              padding: '1rem',
-              marginBottom: '1rem',
-              borderRadius: '6px',
-            }}
-          >
-            {book.coverImageUrl && (
-              <img
-              src={book.coverImageUrl}
-              alt={book.title}
-              style={{
-                width:  '120px',
-                height:  '180px',
-                objectFit: 'cover',
-                marginBottom: '0.5rem',
-              }}
-              />
-            )}
-            <h3>{book.title}</h3>
-            <p>{book.author}</p>
-            <p>{book.price} BD</p>
-            <a href={`/books/${book._id}`}>View</a>
-          </div>
-        ))}
+        <div className="book-card-body">
+          <div className="book-title">{book.title}</div>
+          <div className="book-author">{book.author}</div>
+          <div className="book-price">{book.price} BD</div>
 
-      {/* No results */}
-      {books.filter((book) => {
-        return (
-          book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          book.author?.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }).length === 0 && (
-        <p>No books found</p>
-      )}
-    </div>
+          <Link to={`/books/${book._id}`}>
+            <button>View Book</button>
+          </Link>
+        </div>
+      </div>
+    ))}
   </div>
-);
-}
+
+  {filteredBooks.length === 0 && <p>No books found</p>}
+</div>
+
+  );
+};
 
 export default BooksPage;
