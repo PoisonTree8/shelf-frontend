@@ -74,15 +74,44 @@ button:active {
   letter-spacing: 1px;
 }
 
+/* ===== Responsive Design for Navbar ===== */
+
+/* Tablet Screens (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .nav-left,
+  .nav-right {
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+/* Mobile Screens (max-width: 768px) */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
-    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
   }
 
   .nav-left,
   .nav-right {
     flex-direction: column;
-    gap: 1rem;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .nav-left a,
+  .nav-right a {
+    font-size: 1rem;
+  }
+
+  button {
+    width: 100%;
+    text-align: center;
   }
 }
