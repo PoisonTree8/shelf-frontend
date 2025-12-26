@@ -120,90 +120,100 @@ export default function BookDetails() {
 
   return (
     <div className="container">
-      <div className="book-details">
+      <div className="book-details" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
         {book.coverImageUrl ? (
           <img
             src={book.coverImageUrl}
             alt={book.title}
-            onError={(e) => {
-              e.target.onerror = null; // Prevent infinite loop
-              e.target.src = '/path/to/placeholder-image.jpg'; 
+            style={{
+              width: '220px',
+              height: 'auto',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             }}
           />
         ) : (
           <img
             src="/path/to/placeholder-image.jpg"
             alt="Placeholder"
+            style={{
+              width: '220px',
+              height: 'auto',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}
           />
         )}
 
-        <div>
+        <div style={{ flex: 1 }}>
           <h1>{book.title}</h1>
           <p><strong>Author:</strong> {book.authorName}</p>
           <p><strong>Price:</strong> {book.price} BD</p>
           <p>{book.description}</p>
 
-          <div className="book-actions">
+          <div className="book-actions" style={{ marginTop: '20px' }}>
             <button className="primary" onClick={handleRead}>
               {hasPurchased ? 'Read Full Book' : 'Read Preview'}
             </button>
 
             {user && !hasPurchased && (
-              <button className="secondary" onClick={handleBuy}>
+              <button className="secondary" onClick={handleBuy} style={{ marginLeft: '10px' }}>
                 Buy Book
               </button>
             )}
           </div>
 
           {user && hasPurchased && (
-            <p style={{ color: 'green' }}>Already Purchased</p>
+            <p style={{ color: 'green', marginTop: '10px' }}>Already Purchased</p>
           )}
         </div>
       </div>
 
-      <hr />
+      <hr style={{ margin: '40px 0', border: 'none', borderTop: '1px solid #ddd' }} />
 
-      <h3>Ratings</h3>
-      {ratings.length === 0 ? (
-        <p>No ratings yet</p>
-      ) : (
-        <ul className="rating-list">
-          {ratings.map((rating) => (
-            <li key={rating._id}>
-              <strong>{rating.user_id?.username}:</strong> {rating.ratingValue} / 5
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="ratings-section" style={{ textAlign: 'center' }}>
+        <h3>Ratings</h3>
+        {ratings.length === 0 ? (
+          <p>No ratings yet</p>
+        ) : (
+          <ul className="rating-list" style={{ listStyle: 'none', padding: 0 }}>
+            {ratings.map((rating) => (
+              <li key={rating._id} style={{ marginBottom: '10px' }}>
+                <strong>{rating.user_id?.username}:</strong> {rating.ratingValue} / 5
+              </li>
+            ))}
+          </ul>
+        )}
 
-      {user && hasPurchased && (
-        <div className="rating-section">
-          <h4>Add Your Rating</h4>
+        {user && hasPurchased && (
+          <div className="rating-section" style={{ marginTop: '20px' }}>
+            <h4>Add Your Rating</h4>
 
-          <div className="rating-input" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <label htmlFor="rating-select" style={{ fontWeight: 'bold' }}>Rating:</label>
-            <select
-              id="rating-select"
-              value={ratingValue}
-              onChange={(e) => setRatingValue(Number(e.target.value))}
-              style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ddd' }}
-            >
-              {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>{n} Star{n > 1 ? 's' : ''}</option>
-              ))}
-            </select>
+            <div className="rating-input" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+              <label htmlFor="rating-select" style={{ fontWeight: 'bold' }}>Rating:</label>
+              <select
+                id="rating-select"
+                value={ratingValue}
+                onChange={(e) => setRatingValue(Number(e.target.value))}
+                style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ddd' }}
+              >
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <option key={n} value={n}>{n} Star{n > 1 ? 's' : ''}</option>
+                ))}
+              </select>
 
-            <button
-              className="primary"
-              onClick={handleAddRating}
-              disabled={submittingRating}
-              style={{ padding: '0.5rem 1rem', borderRadius: '4px', fontWeight: 'bold' }}
-            >
-              {submittingRating ? 'Submitting...' : 'Submit'}
-            </button>
+              <button
+                className="primary"
+                onClick={handleAddRating}
+                disabled={submittingRating}
+                style={{ padding: '0.5rem 1rem', borderRadius: '4px', fontWeight: 'bold' }}
+              >
+                {submittingRating ? 'Submitting...' : 'Submit'}
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
