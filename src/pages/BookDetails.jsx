@@ -23,7 +23,7 @@ export default function BookDetails() {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/books/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/books/${id}`);
         const data = await res.json();
         setBook(data);
       } catch (err) {

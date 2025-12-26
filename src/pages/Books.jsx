@@ -17,7 +17,7 @@ const BooksPage = () => {
   const loadBooks = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:3000/books');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/books`);
       const data = await res.json();
       setBooks(Array.isArray(data) ? data : []);
     } catch (error) {
@@ -30,7 +30,7 @@ const BooksPage = () => {
 
   const deleteBook = async (bookId) => {
     try {
-      const res = await fetch(`http://localhost:3000/books/${bookId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/books/${bookId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

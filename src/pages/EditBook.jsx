@@ -4,12 +4,20 @@ import { useParams, useNavigate } from 'react-router-dom';
 const EditBook = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [bookDetails, setBookDetails] = useState({ title: '', author: '', price: '' });
+  const [bookDetails, setBookDetails] = useState({
+    title: '',
+    author: '',
+    price: '',
+    description: '',
+    previewPdfUrl: '',
+    fullPdfUrl: '',
+    coverImageUrl: '',
+  });
 
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/books/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/books/${id}`);
         if (res.ok) {
           const data = await res.json();
           setBookDetails(data);
@@ -32,7 +40,7 @@ const EditBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:3000/books/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/books/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -79,6 +87,41 @@ const EditBook = () => {
             type="number"
             name="price"
             value={bookDetails.price}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label>Description:</label>
+          <textarea
+            name="description"
+            value={bookDetails.description}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label>Preview PDF URL:</label>
+          <input
+            type="text"
+            name="previewPdfUrl"
+            value={bookDetails.previewPdfUrl}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label>Full PDF URL:</label>
+          <input
+            type="text"
+            name="fullPdfUrl"
+            value={bookDetails.fullPdfUrl}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label>Cover Image URL:</label>
+          <input
+            type="text"
+            name="coverImageUrl"
+            value={bookDetails.coverImageUrl}
             onChange={handleInputChange}
           />
         </div>

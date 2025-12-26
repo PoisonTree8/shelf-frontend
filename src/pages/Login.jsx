@@ -25,7 +25,7 @@ export default function Login() {
 
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:3000/auth/sign-in', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/sign-in`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

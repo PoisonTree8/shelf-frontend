@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/ratings';
+const BASE_URL = `${import.meta.env.VITE_API_URL}/ratings`;
 
 export async function getBookRatings(bookId) {
   const res = await fetch(`${BASE_URL}/book/${bookId}`);

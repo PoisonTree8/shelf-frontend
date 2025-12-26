@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/purchases';
+const BASE_URL = `${import.meta.env.VITE_API_URL}/purchases`;
 
 export async function buyBook(bookId) {
   const token = localStorage.getItem('token');
@@ -45,7 +45,7 @@ export async function checkPurchase(bookId) {
 export async function deleteBook(bookId) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`http://localhost:3000/books/${bookId}`, {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/books/${bookId}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
