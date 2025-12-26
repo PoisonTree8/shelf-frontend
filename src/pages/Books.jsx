@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import './Books.css';
 
 const BooksPage = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,6 +25,24 @@ const BooksPage = () => {
       setBooks([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const deleteBook = async (bookId) => {
+    try {
+      const res = await fetch(`http://localhost:3000/books/${bookId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (res.ok) {
+        setBooks(books.filter((book) => book._id !== bookId));
+      } else {
+        console.error('Failed to delete book');
+      }
+    } catch (error) {
+      console.error('Error deleting book:', error);
     }
   };
 
@@ -65,12 +86,36 @@ const BooksPage = () => {
 
             <div className="book-card-body">
               <div className="book-title">{book.title}</div>
-              <div className="book-author">{book.authorName}</div>
+              <div className="book-authorName">{book.authorName}</div>
               <div className="book-price">{book.price} BD</div>
 
               <Link to={`/books/${book._id}`}>
                 <button>View Book</button>
               </Link>
+              {user?.role === 'admin' && (
+                <>
+                  <button
+                    onClick={() => deleteBook(book._id)}
+                    style={{
+                      marginLeft: '10px',
+                      backgroundColor: 'red',
+                      color: 'white',
+                    }}
+                  >
+                    Delete Book
+                  </button>
+                  <button
+                    onClick={() => navigate(`/admin/edit-book/${book._id}`)}
+                    style={{
+                      marginLeft: '10px',
+                      backgroundColor: 'blue',
+                      color: 'white',
+                    }}
+                  >
+                    Edit Book
+                  </button>
+                </>
+              )}
             </div>
           </div>
         ))}

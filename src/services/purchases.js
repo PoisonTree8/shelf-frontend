@@ -41,3 +41,20 @@ export async function checkPurchase(bookId) {
 
   return res.json(); // { purchased: true/false }
 }
+
+export async function deleteBook(bookId) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch(`http://localhost:3000/books/${bookId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to delete book');
+  }
+
+  return res.json();
+}

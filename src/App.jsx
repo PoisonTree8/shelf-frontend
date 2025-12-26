@@ -7,6 +7,7 @@ import SignUp from './pages/signUp.jsx';
 import Navbar from './components/Navbar';
 import Library from './pages/Library';
 import AddBook from './pages/addBook';
+import EditBook from './pages/EditBook';
 import './index.css';
 import './pages/Books.css';
 import './pages/BookDetails.css';
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/library" element={<Library />} />
         <Route path="/admin/add-Book" element={<AddBook />} />
+        <Route path="/admin/edit-book/:id" element={<EditBook />} />
 
       </Routes>
     </div>

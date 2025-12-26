@@ -127,7 +127,7 @@ export default function BookDetails() {
             alt={book.title}
             onError={(e) => {
               e.target.onerror = null; // Prevent infinite loop
-              e.target.src = '/path/to/placeholder-image.jpg'; // Fallback image
+              e.target.src = '/path/to/placeholder-image.jpg'; 
             }}
           />
         ) : (
