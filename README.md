@@ -80,3 +80,5 @@ React (Frontend)
 Express.js / Node.js (Backend)
 MongoDB + Mongoose (Database)
 JWT Authentication
+cloudinary
+iLovePdf
