@@ -1,19 +1,38 @@
-/* ===== Global Reset ===== */
+:root {
+  --max-width: 1200px;
+  --gap: 1rem;
+  --nav-height: 72px;
+  --bg: #f8f9fa;
+  --card-bg: #fff;
+  --text: #333;
+  --muted: #666;
+  --primary: #007185;
+  --accent: #febd69;
+}
+
+/* ===== Reset & Base ===== */
 * {
   box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: #f8f9fa;
-  color: #333;
-  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: var(--nav-height);
 }
 
 a {
+  color: var(--primary);
   text-decoration: none;
-  color: #007185;
 }
 
 a:hover {
@@ -22,160 +41,73 @@ a:hover {
 
 /* ===== Layout ===== */
 .container {
-  max-width: 1200px;
-  margin: auto;
+  max-width: var(--max-width);
+  margin: 0 auto;
   padding: 1rem;
 }
 
-/* ===== Navbar ===== */
-nav {
-  background: #232f3e;
-  color: #fff;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+main {
+  min-height: calc(100vh - var(--nav-height));
 }
 
-nav a {
-  color: #fff;
-  margin-right: 1rem;
-  font-weight: bold;
-}
+/* ===== Utilities ===== */
+.center { text-align: center; }
+.muted { color: var(--muted); }
+.visually-hidden { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px,1px,1px,1px); white-space: nowrap; }
 
-nav a:hover {
-  color: #febd69;
-}
-
-nav button {
-  background: #febd69;
-  color: #232f3e;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-nav button:hover {
-  background: #f3a847;
-}
+.img-responsive, img { max-width: 100%; height: auto; display: block; }
+.cover { width: 100%; height: auto; object-fit: cover; }
 
 /* ===== Buttons ===== */
 button {
-  padding: 0.8rem 1.2rem;
-  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  transition: background 0.3s ease;
 }
 
-button.primary {
-  background: #007185;
-  color: #fff;
-}
-
-button.primary:hover {
-  background: #005f63;
-}
-
-button.secondary {
-  background: #e7e9ec;
-  color: #333;
-}
-
-button.secondary:hover {
-  background: #d5d9dc;
-}
-
-button.danger {
-  background: #d9534f;
-  color: #fff;
-}
-
-button.danger:hover {
-  background: #c9302c;
-}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-secondary { background: #e7e9ec; color: var(--text); }
 
 /* ===== Cards ===== */
 .card {
-  background: #fff;
-  border: 1px solid #ddd;
+  background: var(--card-bg);
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.card img {
-  width: 100%;
-  height: auto;
-}
-
-.card h3 {
-  margin: 1rem 0 0.5rem;
-  font-size: 1.2rem;
-}
-
-.card p {
-  color: #555;
-  font-size: 0.9rem;
-}
+.card .card-body { padding: 1rem; }
 
 /* ===== Grid ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--gap);
 }
+
+/* ===== Book Images (maintain aspect ratio) ===== */
+.img-aspect {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+
+.img-aspect img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ===== Book Details ===== */
-.book-details {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+.book-details { padding: 1rem; }
 
-.book-details img {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.book-details h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.book-details p {
-  margin-bottom: 1rem;
-}
-
-.book-details button {
-  margin-top: 1rem;
-}
-
-/* ===== Ratings ===== */
-.rating-list {
-  margin-top: 1rem;
-  padding-left: 1rem;
-}
-
-.rating-list li {
-  margin-bottom: 0.5rem;
+@media (min-width: 1024px) {
+  .book-details { padding: 2rem; }
 }
 
 /* ===== Footer ===== */
-footer {
-  background: #232f3e;
-  color: #fff;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
+footer { background: linear-gradient(90deg,#232f3e,#37475a); color: #fff; text-align:center; padding:1rem; }
+
+/* Small adjustments for very small screens */
+@media (max-width: 420px) {
+  :root { --nav-height: 88px; }
+  body { font-size: 14px; }
 }
