@@ -1,38 +1,26 @@
-/* Book details layout: two-column on desktop, stacked on mobile */
-.book-details-container { padding: 1rem; }
+/* Book details: modern two-column layout */
+.book-details-container{padding:var(--space-3)}
 
-.book-details {
-  display: grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap: 1.25rem;
-  align-items: start;
-}
+.book-details{display:grid;grid-template-columns:1fr 1.4fr;gap:var(--space-3);align-items:start}
 
-/* image container for consistent aspect ratio when used */
-.book-details .img-aspect { width:100%; aspect-ratio:3/4; border-radius:8px; overflow:hidden; }
-.book-details img { width:100%; height:100%; object-fit:cover; display:block; border-radius:8px; }
+.book-details .img-aspect{width:100%;aspect-ratio:3/4;border-radius:12px;overflow:hidden}
+.book-details img{width:100%;height:100%;object-fit:cover;display:block;border-radius:12px}
 
-/* Desktop: constrain image size so it doesn't appear oversized */
-.book-details > img,
-.book-details .img-aspect { max-width: 360px; max-height: 520px; }
+/* Constrain image on desktop */
+.book-details > img,.book-details .img-aspect{max-width:360px;max-height:520px}
+.book-details img{max-width:100% !important;width:100% !important;height:auto !important}
 
-/* Override inline width in JSX to make cover responsive and constrained */
-.book-details img { max-width: 100% !important; width: 100% !important; height: auto !important; }
+.book-details h1{font-size:clamp(1.4rem,3.2vw,2.1rem);margin:0 0 0.5rem;color:var(--color-text)}
+.book-details p{color:var(--color-muted);line-height:1.6}
+.book-details .price{color:var(--color-primary);font-weight:800;font-size:1.15rem;margin:0.75rem 0}
 
-.book-details h1 { font-size: clamp(1.4rem, 3.2vw, 2.2rem); margin:0 0 0.5rem; color:#232f3e; }
-.book-details p { color:var(--muted); line-height:1.6; }
-.book-details .price { color:var(--primary); font-weight:700; font-size:1.15rem; margin:0.75rem 0; }
+.book-actions{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:var(--space-2)}
+.book-actions button{padding:0.7rem 1rem;border-radius:10px}
 
-.book-actions { display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:0.75rem; }
-.book-actions button { padding:0.65rem 0.9rem; border-radius:6px; }
+.rating-list{margin-top:1rem;padding-left:0.75rem}
 
-.rating-list { margin-top:1rem; padding-left:0.75rem; }
-
-/* Mobile: stack image above text and reduce image size significantly */
-@media (max-width: 768px) {
-  .book-details { grid-template-columns: 1fr; }
-  .book-details > img,
-  .book-details .img-aspect { display:block; margin:0 auto 1rem; width:clamp(120px, 30vw, 180px); max-width: 40%; height: auto; }
-  .book-details img { height: auto; }
-  .book-details h1 { text-align: left; }
+@media (max-width:768px){
+  .book-details{grid-template-columns:1fr}
+  .book-details > img,.book-details .img-aspect{display:block;margin:0 auto 1rem;width:clamp(120px,30vw,180px);max-width:40%;height:auto}
+  .book-details h1{text-align:left}
 }

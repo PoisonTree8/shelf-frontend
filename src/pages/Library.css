@@ -1,17 +1,16 @@
-.library-page { padding:1rem; }
-.library-grid { display:grid; gap:1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items:start; }
-.library-book { background:var(--card-bg); padding:0.9rem; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.04); display:flex; align-items:center; gap:1rem; }
-.library-book h3 { margin:0; font-size:1rem; color:#232f3e; }
-.library-book p { margin:0; color:var(--muted); font-size:0.95rem; }
-.library-book .book-link { color:var(--primary); font-weight:600; }
+.library-page{padding:var(--space-3)}
+.library-grid{display:grid;gap:var(--space-3);grid-template-columns:repeat(auto-fit,minmax(220px,1fr));align-items:start}
+.library-book{background:var(--color-surface);padding:var(--space-2);border-radius:12px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:var(--space-3)}
+.library-book h3{margin:0;font-size:1rem;color:var(--color-text)}
+.library-book p{margin:0;color:var(--color-muted);font-size:0.95rem}
+.library-book .book-link{color:var(--color-primary);font-weight:600}
 
 /* fixed aspect ratio cover for uniform sizing */
-.library-book .cover-aspect { width:96px; aspect-ratio:3/4; overflow:hidden; border-radius:6px; flex:0 0 96px; }
-.library-book .cover-aspect img, .library-book .library-book-cover { width:100%; height:100%; object-fit:cover; display:block; }
+.library-book .cover-aspect{width:96px;aspect-ratio:3/4;overflow:hidden;border-radius:8px;flex:0 0 96px}
+.library-book .cover-aspect img,.library-book .library-book-cover{width:100%;height:100%;object-fit:cover;display:block}
 
-/* place text to the right of cover; on small screens, stack */
-@media (max-width:520px) {
-	.library-grid { grid-template-columns: 1fr; }
-	.library-book { flex-direction:column; align-items:flex-start; }
-	.library-book .cover-aspect { width:120px; flex:0 0 auto; }
+@media (max-width:520px){
+	.library-grid{grid-template-columns:1fr}
+	.library-book{flex-direction:column;align-items:flex-start}
+	.library-book .cover-aspect{width:120px;flex:0 0 auto}
 }
