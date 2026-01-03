@@ -24,3 +24,72 @@
   .book-details > img,.book-details .img-aspect{display:block;margin:0 auto 1rem;width:clamp(120px,30vw,180px);max-width:40%;height:auto}
   .book-details h1{text-align:left}
 }
+
+.book-details {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.book-cover img {
+  width: 220px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.book-info {
+  flex: 1;
+}
+
+.book-title {
+  margin-bottom: 0.5rem;
+}
+
+.book-description {
+  line-height: 1.7;
+  margin-top: 1rem;
+}
+
+.book-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.purchased-text {
+  margin-top: 0.75rem;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.divider {
+  margin: 3rem 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.ratings-section {
+  text-align: center;
+}
+
+/* 📱 MOBILE FIX */
+@media (max-width: 768px) {
+  .book-details {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .book-cover img {
+    width: 140px;
+  }
+
+  .book-info {
+    width: 100%;
+  }
+
+  .book-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}

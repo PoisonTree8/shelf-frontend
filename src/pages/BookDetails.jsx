@@ -12,14 +12,12 @@ export default function BookDetails() {
 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const [hasPurchased, setHasPurchased] = useState(false);
 
   const [ratings, setRatings] = useState([]);
   const [ratingValue, setRatingValue] = useState(5);
   const [submittingRating, setSubmittingRating] = useState(false);
 
-  // fetch book
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -32,153 +30,93 @@ export default function BookDetails() {
         setLoading(false);
       }
     };
-
     fetchBook();
   }, [id]);
 
-  // check purchase
   useEffect(() => {
     if (!user || !book) return;
-
     const check = async () => {
-      try {
-        const res = await checkPurchase(book._id);
-        setHasPurchased(res.purchased);
-      } catch (err) {
-        console.error(err);
-      }
+      const res = await checkPurchase(book._id);
+      setHasPurchased(res.purchased);
     };
-
     check();
   }, [user, book]);
 
-  // fetch ratings
   useEffect(() => {
     if (!book) return;
-
     const fetchRatings = async () => {
-      try {
-        const data = await getBookRatings(book._id);
-        setRatings(data);
-      } catch (err) {
-        console.error(err);
-      }
+      const data = await getBookRatings(book._id);
+      setRatings(data);
     };
-
     fetchRatings();
   }, [book]);
 
   const handleBuy = async () => {
-    try {
-      await buyBook(book._id);
-      setHasPurchased(true);
-    } catch (err) {
-      alert('Purchase failed');
-    }
+    await buyBook(book._id);
+    setHasPurchased(true);
   };
 
   const handleRead = () => {
-    const url = hasPurchased
-      ? book.fullPdfUrl
-      : book.previewPdfUrl;
-
-    if (!url) {
-      alert('No PDF available');
-      return;
-    }
-
+    const url = hasPurchased ? book.fullPdfUrl : book.previewPdfUrl;
+    if (!url) return alert('No PDF available');
     window.open(url, '_blank');
   };
 
   const handleAddRating = async () => {
-    try {
-      setSubmittingRating(true);
-      const newRating = await addRating(book._id, ratingValue);
-      setRatings([newRating, ...ratings]);
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setSubmittingRating(false);
-    }
+    setSubmittingRating(true);
+    const newRating = await addRating(book._id, ratingValue);
+    setRatings([newRating, ...ratings]);
+    setSubmittingRating(false);
   };
 
-  if (loading) {
-    return (
-      <div className="container">
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  if (!book) {
-    return (
-      <div className="container">
-        <p>Book not found</p>
-      </div>
-    );
-  }
+  if (loading) return <div className="container">Loading...</div>;
+  if (!book) return <div className="container">Book not found</div>;
 
   return (
     <div className="container">
-      <div className="book-details" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-        {book.coverImageUrl ? (
+      <div className="book-details">
+        <div className="book-cover">
           <img
-            src={book.coverImageUrl}
+            src={book.coverImageUrl || '/placeholder.jpg'}
             alt={book.title}
-            style={{
-              width: '220px',
-              height: 'auto',
-              borderRadius: '8px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            }}
           />
-        ) : (
-          <img
-            src="/path/to/placeholder-image.jpg"
-            alt="Placeholder"
-            style={{
-              width: '220px',
-              height: 'auto',
-              borderRadius: '8px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            }}
-          />
-        )}
+        </div>
 
-        <div style={{ flex: 1 }}>
-          <h1>{book.title}</h1>
-          <p><strong>Author:</strong> {book.authorName}</p>
-          <p><strong>Price:</strong> {book.price} BD</p>
-          <p>{book.description}</p>
+        <div className="book-info">
+          <h1 className="book-title">{book.title}</h1>
+          <p className="book-author"><strong>Author:</strong> {book.authorName}</p>
+          <p className="book-price"><strong>Price:</strong> {book.price} BD</p>
+          <p className="book-description">{book.description}</p>
 
-          <div className="book-actions" style={{ marginTop: '20px' }}>
+          <div className="book-actions">
             <button className="primary" onClick={handleRead}>
               {hasPurchased ? 'Read Full Book' : 'Read Preview'}
             </button>
 
             {user && !hasPurchased && (
-              <button className="secondary" onClick={handleBuy} style={{ marginLeft: '10px' }}>
+              <button className="secondary" onClick={handleBuy}>
                 Buy Book
               </button>
             )}
           </div>
 
           {user && hasPurchased && (
-            <p style={{ color: 'green', marginTop: '10px' }}>Already Purchased</p>
+            <p className="purchased-text">Already Purchased</p>
           )}
         </div>
       </div>
 
-      <hr style={{ margin: '40px 0', border: 'none', borderTop: '1px solid #ddd' }} />
+      <hr className="divider" />
 
-      <div className="ratings-section" style={{ textAlign: 'center' }}>
+      <div className="ratings-section">
         <h3>Ratings</h3>
+
         {ratings.length === 0 ? (
           <p>No ratings yet</p>
         ) : (
-          <ul className="rating-list" style={{ listStyle: 'none', padding: 0 }}>
+          <ul className="rating-list">
             {ratings.map((rating) => (
-              <li key={rating._id} style={{ marginBottom: '10px' }}>
+              <li key={rating._id}>
                 <strong>{rating.user_id?.username}:</strong> {rating.ratingValue} / 5
               </li>
             ))}
@@ -186,31 +124,23 @@ export default function BookDetails() {
         )}
 
         {user && hasPurchased && (
-          <div className="rating-section" style={{ marginTop: '20px' }}>
-            <h4>Add Your Rating</h4>
+          <div className="rating-form">
+            <select
+              value={ratingValue}
+              onChange={(e) => setRatingValue(Number(e.target.value))}
+            >
+              {[1, 2, 3, 4, 5].map(n => (
+                <option key={n} value={n}>{n} Star{n > 1 ? 's' : ''}</option>
+              ))}
+            </select>
 
-            <div className="rating-input" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
-              <label htmlFor="rating-select" style={{ fontWeight: 'bold' }}>Rating:</label>
-              <select
-                id="rating-select"
-                value={ratingValue}
-                onChange={(e) => setRatingValue(Number(e.target.value))}
-                style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ddd' }}
-              >
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <option key={n} value={n}>{n} Star{n > 1 ? 's' : ''}</option>
-                ))}
-              </select>
-
-              <button
-                className="primary"
-                onClick={handleAddRating}
-                disabled={submittingRating}
-                style={{ padding: '0.5rem 1rem', borderRadius: '4px', fontWeight: 'bold' }}
-              >
-                {submittingRating ? 'Submitting...' : 'Submit'}
-              </button>
-            </div>
+            <button
+              className="primary"
+              onClick={handleAddRating}
+              disabled={submittingRating}
+            >
+              {submittingRating ? 'Submitting...' : 'Submit'}
+            </button>
           </div>
         )}
       </div>
